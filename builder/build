@@ -1,0 +1,7 @@
+#!/bin/sh
+set -euo pipefail
+mkdir -p /rootfs/etc
+cp -r /etc/apk /rootfs/etc/
+qemu-arm /tmp/sbin/apk.static -vv --root /rootfs --arch armhf --initdb --update add alpine-base >&2 || true
+
+tar -czf - -C /rootfs .
