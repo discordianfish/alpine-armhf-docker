@@ -4,5 +4,5 @@ services:
 
 script:
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - update-binfmts --importdir /var/lib/binfmts/ --import
+  - modprobe binfmt_misc
   - make push
