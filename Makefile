@@ -1,4 +1,4 @@
-IMAGE=fish/alpine-rpi
+IMAGE=fish/alpine-armhf
 
 all: image-stamp
 
