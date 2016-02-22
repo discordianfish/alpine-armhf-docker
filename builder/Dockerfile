@@ -6,5 +6,5 @@ RUN apt-get -qy update && apt-get install -qy curl qemu-user-static binfmt-suppo
     | tar -C / -xzf - \
     && openssl dgst -sha1 -verify /etc/apk/keys/$(echo /sbin/apk.static.*|sed 's/.*SIGN.RSA.//') \
       -signature /sbin/apk.static.SIGN.RSA.* /sbin/apk.static
-COPY build /bin
+COPY build /bin/
 ENTRYPOINT [ "/bin/build" ]
