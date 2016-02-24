@@ -1,17 +1,20 @@
-IMAGE=fish/alpine-rpi
+IMAGE = fish/alpine-armhf
+VERSION ?= latest-stable
 
 all: image-stamp
+TARBALL = rootfs-$(VERSION).tar.gz
 
-image-stamp: rootfs.tar.gz
-	docker build -t $(IMAGE) .
+image-stamp: $(TARBALL)
+	VERSION=$(VERSION) envsubst '$VERSION' < Dockerfile.envsubst > Dockerfile
+	docker build -t $(IMAGE):$(VERSION) .
 	touch $@
 
-rootfs.tar.gz:
+$(TARBALL):
 	docker build -t builder builder/
-	docker run builder > $@
+	docker run builder $(VERSION) > $@
 
 clean:
-	rm -f rootfs.tar.gz *-stamp
+	rm -f rootfs-*.tar.gz *-stamp
 
 push: all
-	docker push $(IMAGE)
+	docker push $(IMAGE):$(VERSION)

@@ -1,9 +1,10 @@
 #!/bin/sh
 set -eu
+VERSION=${1:-latest-stable}
 mkdir -p /rootfs/etc /rootfs/usr/bin
 cp -r /etc/apk /rootfs/etc
 cp /usr/bin/qemu-arm-static /rootfs/usr/bin
-echo http://dl-3.alpinelinux.org/alpine/latest-stable/main > /rootfs/etc/apk/repositories
+echo http://dl-3.alpinelinux.org/alpine/$VERSION/main > /rootfs/etc/apk/repositories
 apk.static -vv --root /rootfs --arch armhf --initdb --update add alpine-base >&2
 
 tar -czf - -C /rootfs .
